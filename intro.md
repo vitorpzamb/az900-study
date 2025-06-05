@@ -3,6 +3,7 @@
 ## Overview
 
 Cloud Concepts cover the foundational principles of cloud computing, including its benefits, deployment models, and service models. This section is critical for the AZ-900 exam, as it forms the basis for understanding Azure’s value proposition and architecture. Expect questions on definitions, benefits, and comparisons of cloud models.
+*Scalability focuses on the ability to handle increased workloads by expanding resources, while elasticity focuses on automatically adjusting resources based on real-time demand fluctuations. *
 
 ## Key Concepts
 
