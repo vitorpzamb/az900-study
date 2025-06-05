@@ -89,6 +89,25 @@ Cloud service models describe the different ways cloud providers (like Microsoft
 | **SaaS**        | Ready-to-use software                | Microsoft 365, Dynamics 365           | User accounts, data         | Email, productivity, business apps       | Tenant ID, user roles                    |
 | **Serverless**  | Event-driven code execution          | Azure Functions, Logic Apps           | Code, triggers              | Automation, event-driven tasks           | Trigger type, runtime, scaling settings  |
 
+### When using a cloud provider, you’ll always be responsible for:
+
+The information and data stored in the cloud
+Devices that are allowed to connect to your cloud (cell phones, computers, and so on)
+The accounts and identities of the people, services, and devices within your organization
+
+### The cloud provider is always responsible for:
+
+The physical datacenter
+The physical network
+The physical hosts
+
+### Your service model will determine responsibility for things like:
+
+Operating systems
+Network controls
+Applications
+Identity and infrastructure
+
 ## Memorization Tips for AZ-900
 
 - **Use the Cooking Analogy**:
