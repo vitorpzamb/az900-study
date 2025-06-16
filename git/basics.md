@@ -23,6 +23,10 @@ Press Enter to open https://github.com/login/device in your browser...
 ### Username
 `git config --global user.name "git-username"`
 
+## Update branch
+`git fetch -p`
+`git pull origin <branch-name>`
+
 ## Branch
 
 ### Create new
@@ -31,7 +35,7 @@ Right after, needs to publish the branch, otherwise, branch will exist only loca
 `git push -u origin <branch-name>`
 
 ### Switch branch
-`git checkout <branch name>`
+`git checkout <branch-name>`
 
 ### See local branches
 `git branch`
