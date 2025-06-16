@@ -1,3 +1,28 @@
+## Authentication
+
+### GitHub CLI (Easiest method)
+```sh
+gh auth login
+### Where do you use GitHub?
+GitHub.com
+### What is your preferred protocol for Git operations on this host?
+HTTPS
+### Authenticate Git with your GitHub credentials?
+Y
+### How would you like to authenticate GitHub CLI?
+Login with a web browser
+First copy your one-time code: XXXX-XXXX
+Press Enter to open https://github.com/login/device in your browser...
+```
+
+## Config
+
+### Email
+`git config --global user.email "email-registered-on-git"`
+
+### Username
+`git config --global user.name "git-username"`
+
 ## Branch
 
 ### Create new
