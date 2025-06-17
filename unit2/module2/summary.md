@@ -30,3 +30,8 @@ Serverless. Run small pieces of code in the language you want. Can be triggered 
 | Virtual Machines   | Full (OS, apps)   | You manage OS       | Custom apps, legacy systems     | Azure Virtual Machines    |
 | Containers         | App + dependencies| Azure manages OS    | Microservices, portable apps    | Azure Container Instances |
 | Functions          | Just code         | Azure manages all   | Event-driven tasks, automation  | Azure Functions           |
+
+Exam Tip: Know when to use each: VMs for control, Containers for portability, Functions for automation.
+
+
+
