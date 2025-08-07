@@ -1,5 +1,7 @@
 # AZ-900 Azure Infrastructure Components Summary
 
+**https://learn.microsoft.com/en-us/training/modules/describe-core-architectural-components-of-azure/**
+
 ## Overview
 This module introduces the foundational elements of Azure’s infrastructure, explaining how Azure’s physical and logical components work together to deliver cloud services. You’ll learn about the global network of datacenters, how resources are organized, and the hierarchy used to manage them. These concepts are critical for the AZ-900 exam, as they form the backbone of Azure’s architecture. Expect questions on definitions, use cases, and the relationships between resources, subscriptions, and management groups.
 
