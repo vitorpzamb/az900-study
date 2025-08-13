@@ -1,1 +1,1 @@
-https://learn.microsoft.com/en-us/training/modules/sovereignty-policy-initiatives/
+https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/1-introduction
