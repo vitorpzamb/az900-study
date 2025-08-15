@@ -33,73 +33,101 @@
 - Storage disks (hard disk drives, solid state drives, etc.)
 - Networking (virtual network, public IP address, and port configuration)
 
-PARAMOS AQUI https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/3-exercise-create-azure-virtual-machine
+## Virtual Desktop
+
+- Paas
+- VM that you customize/configure so people can only log in and do their work
+
+## Virtual Machines (VMs) vs. Containers vs. Virtual Desktops: A Comparison
+
+### Overview
+Virtual Machines (VMs), Containers, and Virtual Desktops are virtualization technologies used to support different workloads in Azure. This comparison highlights their key differences, relevant to the AZ-900 exam.
+
+### Key Differences
+
+| **Aspect**              | **Virtual Machines (VMs)**                              | **Containers**                                        | **Virtual Desktops**                                  |
+|-------------------------|-------------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------|
+| **Architecture**        | Full virtualized OS with hypervisor, running a complete guest OS (e.g., Windows, Linux). | Lightweight, shares host OS kernel, includes app and dependencies. | Virtualized desktop environment (e.g., Windows) hosted in the cloud, accessed remotely. |
+| **Resource Usage**      | High resource consumption (CPU, memory, storage) due to full OS. | Low resource usage, shares host OS kernel.          | Moderate to high, depends on desktop OS and user sessions. |
+| **Startup Time**        | Slower (minutes) due to booting entire OS.             | Fast (seconds) as only app and libraries load.     | Moderate (seconds to minutes), depending on session initialization. |
+| **Portability**         | Less portable; tied to specific hypervisor and OS configurations. | Highly portable via container images (e.g., Docker). | Not portable; tied to desktop environment and user configurations. |
+| **Isolation**           | Strong isolation via hypervisor, ideal for multi-tenant scenarios. | Lighter isolation via OS-level namespaces and cgroups. | Strong isolation for user sessions, managed at the desktop level. |
+| **Scalability**         | Scales by adding VMs, but slower and resource-intensive. | Scales quickly, ideal for microservices.           | Scales by adding sessions or hosts, optimized for user concurrency. |
+| **Management in Azure**  | Managed via Azure Virtual Machines, supports diverse workloads. | Managed via Azure Kubernetes Service (AKS) or Azure Container Instances (ACI). | Managed via Azure Virtual Desktop (AVD), supports remote desktop access. |
+| **Use Cases**           | Legacy apps, full OS control, or strict isolation needs. | Microservices, cloud-native apps, DevOps, CI/CD pipelines. | Remote work, virtualized desktop apps, secure access to corporate resources. |
+
+### Azure Context
+- **VMs**: Use Azure Virtual Machines for workloads requiring full OS control, such as legacy applications or specific software configurations.
+- **Containers**: Use Azure Container Instances (ACI) for quick, serverless container deployment or Azure Kubernetes Service (AKS) for orchestrating containerized microservices.
+- **Virtual Desktops**: Use Azure Virtual Desktop (AVD) to provide secure, remote desktop and app access for employees, supporting hybrid work environments.
+
+### Summary
+- **VMs**: Best for heavy, isolated workloads with full OS control but are resource-heavy and slower to scale.
+- **Containers**: Lightweight, portable, and ideal for modern, scalable, cloud-native applications but offer less isolation.
+- **Virtual Desktops**: Optimized for delivering secure, remote desktop experiences, balancing resource use and user-specific needs.
+
+## Azure Container Instances (ACI) vs. Azure Container Apps (ACA) vs. Azure Kubernetes Service (AKS)
+
+### Overview
+ACI, ACA, and AKS are Azure services for running containerized applications, each suited for different use cases based on complexity, scalability, and management needs.
+
+### Comparison Table
+
+| **Aspect**             | **Azure Container Instances (ACI)** | **Azure Container Apps (ACA)** | **Azure Kubernetes Service (AKS)** |
+|------------------------|------------------------------------|--------------------------------|------------------------------------|
+| **Description**        | Serverless, single-container hosting with minimal setup. | Serverless platform for microservices with built-in scaling. | Fully managed Kubernetes for complex, orchestrated workloads. |
+| **Management**         | Fully managed, no orchestration.   | Fully managed, Kubernetes-based, abstracts cluster management. | Managed Kubernetes, user manages some cluster configurations. |
+| **Scaling**            | Manual scaling, no auto-scaling.   | Auto-scaling (KEDA), supports scale-to-zero. | Manual or auto-scaling (HPA, Cluster Autoscaler). |
+| **Use Cases**          | Short-lived tasks, prototyping, simple apps. | Microservices, event-driven apps, background jobs. | Complex, enterprise-grade apps with custom orchestration. |
+| **Complexity**         | Low, no Kubernetes knowledge needed. | Medium, simplified Kubernetes features. | High, requires Kubernetes expertise. |
+| **Azure Integration**  | Basic integration with Azure services. | Strong integration (e.g., Dapr, Envoy). | Extensive integration with Kubernetes ecosystem. |
+
+### Summary
+- **ACI**: Simplest, for lightweight, short-lived tasks with no orchestration.
+- **ACA**: Ideal for serverless microservices with auto-scaling and minimal management.
+- **AKS**: Best for complex, scalable workloads requiring full Kubernetes control.
+
+## Azure Functions
+
+- No need to manage OS or anything
+- Event driven 
+- Auto scalable
+- Support many languages
+- Keyworks: API, REST, CRUDE
+
+## Azure App Service
+
+- Service to build and host Web Apps
+- Runs on the programming language of your choice without managing infrastructure
+- Offers automatic scaling and high availability
+- Support Windows or Linux
+- Enables automated deployments from GitHub, Azure DevOps, or any Git repo
+
+Azure App Service is an HTTP-based service for hosting web applications, REST APIs, and mobile back ends. It supports multiple languages, including .NET, .NET Core, Java, Ruby, Node.js, PHP, or Python. It also supports both Windows and Linux environments.
+
+## Azure Web Apps vs. API Apps vs. WebJobs vs. Mobile Apps
+
+### Overview
+Azure Web Apps, API Apps, WebJobs, and Mobile Apps are part of Azure App Service, each designed for specific application hosting and processing needs.
+
+### Comparison Table
+
+| **Aspect**          | **Web Apps**                          | **API Apps**                         | **WebJobs**                          | **Mobile Apps**                      |
+|---------------------|---------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
+| **Description**     | Hosts web applications and websites.  | Hosts RESTful APIs for apps.         | Runs background tasks and scripts.   | Hosts mobile app backends.           |
+| **Primary Use**     | Web UIs, front-end apps (e.g., ASP.NET, Node.js). | API endpoints for apps (e.g., REST, Swagger). | Scheduled or triggered tasks (e.g., data processing). | Mobile app services (e.g., push notifications, auth). |
+| **Scaling**         | Auto-scaling, manual scaling.         | Auto-scaling, manual scaling.        | Scales with App Service plan.         | Auto-scaling, manual scaling.        |
+| **Execution**       | Continuous, user-driven.              | Continuous, API-driven.              | Scheduled or triggered (continuous or on-demand). | Continuous, mobile-driven.           |
+| **Use Cases**       | Websites, web apps, e-commerce.       | Microservices, API integrations.     | Batch jobs, queue processing.        | Mobile app backends, offline sync.   |
+| **Azure Integration**| App Service, supports multiple frameworks. | App Service, API Management integration. | App Service, triggered by Azure services (e.g., queues). | App Service, mobile SDKs, auth.      |
+
+### Summary
+- **Web Apps**: Best for hosting web applications and user-facing interfaces.
+- **API Apps**: Ideal for building and exposing APIs for various clients.
+- **WebJobs**: Suited for background tasks, such as data processing or scheduled jobs.
+- **Mobile Apps**: Designed for mobile app backends with features like push notifications and authentication.
+
+PARAMOS AQUI https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/8-virtual-network
 
 ---
 
-Compute services and Networking services
-
-Compite -> pocessing power
-Networking -> connecting services
-
-Test will focus on:
-- Compare compute types (ACI - Azure Container Instances, VM - Virtual Machines, Azure Functions)
-- Compare VM options
-- Comprate hosting choices
-- Understand networking concepts
-
-## Compute Types
-
-### Virtual Machines
-VM in the cloud running a OS and apps. You manage the OS AND the apps.
-
-### Container instances
-Isolated environments without managing servers. Packages apps without its dependencies (code, libraries).
-Key words: Docker image, you set CPU and Memory allocation and port mapping
-
-### Azure Functions
-Serverless. Run small pieces of code in the language you want. Can be triggered by HTTP requests, timers and maybe others. Returns HTTP code and payload if available.
-
-| **Type**            | **Control**       | **Management**       | **Use Case**                     | **Azure Service**          |
-|--------------------|-------------------|---------------------|---------------------------------|---------------------------|
-| Virtual Machines   | Full (OS, apps)   | You manage OS       | Custom apps, legacy systems     | Azure Virtual Machines    |
-| Containers         | App + dependencies| Azure manages OS    | Microservices, portable apps    | Azure Container Instances |
-| Functions          | Just code         | Azure manages all   | Event-driven tasks, automation  | Azure Functions           |
-
-Know when to use each: VMs for control, Containers for portability, Functions for automation.
-
----
-
-## VM Options
-
-### VM Scale Sets
-Just like auto scale concept. Group of identical VMs scaling based on demand.
-*Use cases: Apps or services needing to handle varying loads*
-
-### VM Availability Sets
-VMs are spread accross across different Availability Zones to prevent downtime if on server fails
-
-### Azure Virtual Desktop
-A remote Windows desktop
-
-**Memorization Tip**
-*Scale Sets = “Grow/shrink VMs.”*
-*Availability Sets = “Stay online.”*
-*Virtual Desktop = “Work from anywhere.”*
-
-## VM Resources
-
-- OS Disks -> Windows or Linux OS installed in the VM
-- Data Disk -> HD or SSD installed in the BM
-- NIC - Network Interface Card -> Connects VM to a Virtual Networs (VNet)
-- Virtual Network -> A private network for the BM to communcate securely
-- Public IP (optional) -> For external access (e.g. web traffic)
-- Resource Group -> Logical azure group to organize resources
-
-### Key Configuration Fields
-
-- Disk Type (SSD for speed, HDD for cost)
-- Subnet (part of the VNet for the NIC - Network Interface Card)
-- Security Group -> firewall rules for the NIC
-
-Remember: in the last module, when we creted the first resource (the VM), several other resources were added/created in the RG (Resource Group) because all those were required for the VM to work properly.
