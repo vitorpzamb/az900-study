@@ -1,0 +1,1 @@
+https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/1-introduction

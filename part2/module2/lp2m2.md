@@ -35,7 +35,7 @@
 
 ## Virtual Desktop
 
-- Paas
+- PaaS
 - VM that you customize/configure so people can only log in and do their work
 
 ## Virtual Machines (VMs) vs. Containers vs. Virtual Desktops: A Comparison
@@ -66,6 +66,8 @@ Virtual Machines (VMs), Containers, and Virtual Desktops are virtualization tech
 - **Containers**: Lightweight, portable, and ideal for modern, scalable, cloud-native applications but offer less isolation.
 - **Virtual Desktops**: Optimized for delivering secure, remote desktop experiences, balancing resource use and user-specific needs.
 
+---
+
 ## Azure Container Instances (ACI) vs. Azure Container Apps (ACA) vs. Azure Kubernetes Service (AKS)
 
 ### Overview
@@ -86,6 +88,8 @@ ACI, ACA, and AKS are Azure services for running containerized applications, eac
 - **ACI**: Simplest, for lightweight, short-lived tasks with no orchestration.
 - **ACA**: Ideal for serverless microservices with auto-scaling and minimal management.
 - **AKS**: Best for complex, scalable workloads requiring full Kubernetes control.
+
+---
 
 ## Azure Functions
 
@@ -127,7 +131,156 @@ Azure Web Apps, API Apps, WebJobs, and Mobile Apps are part of Azure App Service
 - **WebJobs**: Suited for background tasks, such as data processing or scheduled jobs.
 - **Mobile Apps**: Designed for mobile app backends with features like push notifications and authentication.
 
-PARAMOS AQUI https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/8-virtual-network
+---
+
+## Azure Network
+
+Virtual networks and virtual subnets **enable Azure resources**, such as VMs, web apps, and databases, **to communicate with each other, with users on the internet, and with your on-premises client computers**.
+
+### Capabilities
+- Isolation & segmentation: Organize and separate resources safely.
+- Internet communications: Control what’s exposed publicly.
+- Azure ↔️ Azure communication: Connect services securely.
+- On-premises communication: Extend your office network to Azure.
+- Routing: Decide where traffic goes.
+- Filtering: Control what’s allowed.
+- VNet peering: Connect networks privately (even worldwide).
+
+### Public and Private Endpoints
+*enable communication between external or internal resources with other internal resources*
+- Public endpoints have a public IP address and can be accessed from anywhere in the world.
+- Private endpoints exist within a virtual network and have a private IP address from within the address space of that virtual network.
+
+### Internet communications
+**Enable incoming connections from the internet** by **assigning a public IP address to an Azure resource**, or **putting the resource behind a public load balancer**
+
+### Communicate between Azure resources
+- **Virtual networks** 
+  - **can connect** not only VMs but **other Azure resources**, such as the **App Service Environment for Power Apps, Azure Kubernetes Service, and Azure virtual machine scale sets**.
+- **Service endpoints** 
+  - **can connect to other Azure resource types**, such as **Azure SQL databases and storage accounts**. This approach enables you to **link multiple Azure resources to virtual networks to improve security and provide optimal routing** between resources.
+
+## Summarized on-premises
+- `Point-to-Site VPN:` one computer connects to Azure.
+- `Site-to-Site VPN:` your whole office network connects to Azure over the internet.
+- `ExpressRoute:` a private, super secure, high-speed connection that avoids the internet.
+
+### Communicate with on-premises resources
+*you can create a network that spans both your local and cloud environments*
+- **Point-to-site virtual private network connections** 
+  - from a computer outside your organization back into your corporate network. In this case, the client computer initiates an encrypted VPN connection to connect to the Azure virtual network.
+- **Site-to-site virtual private networks** 
+  - link your on-premises VPN device or gateway to the Azure VPN gateway in a virtual network. In effect, the devices in Azure can appear as being on the local network. The connection is encrypted and works over the internet.
+- **Azure ExpressRoute** 
+  - provides a dedicated private connectivity to Azure that doesn't travel over the internet. ExpressRoute is useful for environments where you need greater bandwidth and even higher levels of security.
+
+## Summarized Route
+- `Route Tables:` define custom rules for traffic.
+- `BGP (Border Gateway Protocol):` automatically shares routes between your office and Azure.
+
+### Route network traffic
+*Azure routes traffic between subnets on any connected virtual networks, on-premises networks, and the internet. You also can control routing and override those settings*
+- **Route tables** 
+  - allow you to define rules about how traffic should be directed. You can create custom route tables that control how packets are routed between subnets.
+- **Border Gateway Protocol (BGP)** 
+  - works with Azure VPN gateways, Azure Route Server, or Azure ExpressRoute to propagate on-premises BGP routes to Azure virtual networks.
+
+## Summarized Filter
+- `NSGs (Network Security Groups):` simple allow/deny rules (like: “allow HTTP, block everything else”).
+- `NVAs (Network Virtual Appliances):` advanced tools like firewalls or intrusion detection.
+
+### Filter network traffic
+*enable you to filter traffic between subnets*
+- **Network security groups (NSG)** 
+  - resources that can contain multiple inbound and outbound security rules.
+- **Network virtual appliances** 
+  - specialized VMs that can be compared to a hardened network appliance. A network virtual appliance carries out a particular network function, such as running a firewall or performing wide area network (WAN) optimization.
+
+## Connect Virtual Networks
+- `VNet Peering:` link two Azure networks so they act like one. Works across regions, traffic stays private.
+- `UDRs (User-Defined Routes):` extra control of how traffic flows between networks/subnets.
+
+---
+
+## Virtual Private Networks (VPN)
+*secure, encrypted tunnel that lets two private networks communicate over an untrusted network (like the internet).*
+- It protects data from being seen or attacked while in transit.
+- Companies use VPNs to share sensitive information safely.
+
+### VPN Gateways
+*connects networks*
+- lives inside a dedicated subnet in your virtual network.
+- All traffic is encrypted inside the tunnel.
+- One VPN gateway per VNet, but it can connect to multiple locations.
+
+`Site-to-Site:` your on-premises datacenter ↔️ Azure VNet.
+`Point-to-Site:` a single device (like a laptop) ↔️ Azure VNet.
+`VNet-to-VNet:` connect two Azure VNets together.
+
+### VPN Types
+- Policy-based VPN:
+  - Uses fixed IP rules to decide what traffic goes through.
+  - Less flexible.
+- Route-based VPN:
+  - Uses IP routing (static or dynamic) to decide where traffic goes.
+  - Preferred option in Azure (better for scaling, subnets, and new connections).
+  - Required for: VNet-to-VNet, Point-to-Site, multisite, ExpressRoute coexistence, and high availability.
+
+### ⁠High Availability Options
+- Active/Standby (default):
+  - Two instances exist, but only one is active.
+  - If the active one fails, the standby takes over automatically.
+  - Failover takes a few seconds to ~90 seconds.
+- Active/Active:
+  - Both gateways are active, each with its own public IP.
+  - Multiple tunnels are created → higher redundancy.
+  - Works well with BGP routing.
+- ExpressRoute Failover:
+  - If your private ExpressRoute circuit fails, a VPN gateway can act as a backup connection over the internet.
+- Zone-Redundant Gateways:
+  - Gateways are deployed across multiple availability zones.
+  - Protects from failures in a single datacenter zone.
+  - Uses Standard public IPs instead of Basic.
+
+---
+
+## Azure ExpressRoute
+*lets you extend your on-premises networks into the Microsoft cloud over a private connection*
+*a private, dedicated connection between your on-premises network and Microsoft’s cloud (Azure, Microsoft 365, Dynamics 365).*
+- Uses a connectivity provider (like a telecom/ISP) to set up this private circuit.
+- Does NOT go over the public internet.
+- Each office/datacenter needs its own ExpressRoute circuit.
+
+### ⁠Benefits
+- Direct access to Microsoft services: Office 365, Dynamics 365, Azure VMs, Azure Storage, Cosmos DB, etc.
+- Global Reach: You can connect different sites worldwide (e.g., Asia office ↔️ Europe datacenter) using Microsoft’s backbone instead of the internet.
+- Dynamic Routing via BGP: Automatically exchanges routes between your network and Microsoft, adapting if things change.
+- Built-in Redundancy: Each connection point has backup devices to keep it highly available.
+
+### ⁠Connectivity Models
+ExpressRoute offers 4 main ways to connect your network to Azure:
+- Colocation at a Cloud Exchange
+  - If your datacenter/office is in the same building as a cloud exchange provider (like an ISP hub), you can connect directly via a virtual cross-connect.
+- Point-to-Point Ethernet
+  - A dedicated, direct Ethernet line between your facility and Azure.
+- Any-to-Any (IP VPN / WAN integration)
+  - Azure becomes just another “branch” in your corporate WAN (wide area network).
+  - Offices and datacenters connect to Azure through your provider’s network.
+- Direct from ExpressRoute Sites
+  - You connect straight into Microsoft’s backbone at specific peering sites around the world.
+  - ExpressRoute Direct provides massive bandwidth (10–100 Gbps) with Active/Active redundancy.
+
+### ⁠Security Considerations
+- Since it’s a private circuit, your data doesn’t travel over the public internet → less chance of interception or attack.
+- BUT: Some services (like DNS queries, certificate checks, and CDN requests) still go through the internet even if you use ExpressRoute.
+
+## Azure DNS (Domain Name System)
+*Resolves works (https://google.com) in IP addresses for connection*
+
+### Can be integrated with other Azure Resources for secutiry
+- Azure role-based access control (Azure RBAC) to control who has access to specific actions for your organization.
+- Activity logs to monitor how a user in your organization modified a resource or to find an error when troubleshooting.
+- Resource locking to lock a subscription, resource group, or resource. Locking prevents other users in your organization from accidentally deleting or modifying critical resources.
 
 ---
 
