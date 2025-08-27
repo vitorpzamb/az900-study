@@ -33,7 +33,7 @@
 
 ### Types of Resource Locks
 *hierarchy works here*
-- Delete 
+- Delete
   - means authorized users can still read and modify a resource, but they can't delete the resource.
 - ReadOnly 
   - means authorized users can read a resource, but they can't delete or update the resource. Applying this lock is similar to restricting all authorized users to the permissions granted by the Reader role.
